@@ -5,14 +5,23 @@ var avatarsWindow = document.querySelector('.avatars-window')
 
 let selectedAvatarSrc
 
+if (sessionStorage.getItem('selectedAvatar')) {
+    selectedAvatarSrc = sessionStorage.getItem('selectedAvatar')
+    mouseCursorImg.src = selectedAvatarSrc
+    avatarsWindow.classList.add("display-none")
+    document.querySelector("html").classList.add("cursor-none")
+}
+
 window.addEventListener('mousemove', cursor)
 
 avatarsLi.forEach(avtar => {
     avtar.addEventListener('click', selectAvatar)
 })
 
-document.querySelector(".custom-space").addEventListener("mouseenter", updateAvatar)
-document.querySelector(".custom-space").addEventListener("mouseleave", defaultAvatar)
+if (document.body.classList.contains("home")) {
+    document.querySelector(".custom-space").addEventListener("mouseenter", updateAvatar)
+    document.querySelector(".custom-space").addEventListener("mouseleave", defaultAvatar)
+}    
 
 function updateAvatar(e) {
     if (!selectedAvatarSrc) { return false}
@@ -29,6 +38,7 @@ function selectAvatar(e) {
         return false
     }
     selectedAvatarSrc = e.target.src
+    sessionStorage.setItem('selectedAvatar', selectedAvatarSrc)
     mouseCursorImg.src = selectedAvatarSrc
     mouseCursor.classList.remove("display-none")
     avatarsWindow.classList.add("display-none")
@@ -38,5 +48,6 @@ function selectAvatar(e) {
 function cursor(e) {
     mouseCursor.style.top = e.pageY + 'px';
     mouseCursor.style.left = e.pageX + 'px';
+    mouseCursor.classList.remove("display-none")
     // mouseCursor.setAttribute("style", "top: " + e.pageY + "px; left: " + e.pageX + "px;")
 }
