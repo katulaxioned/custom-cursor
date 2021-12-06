@@ -48,6 +48,8 @@ function selectAvatar(e) {
 function cursor(e) {
     mouseCursor.style.top = e.pageY + 'px';
     mouseCursor.style.left = e.pageX + 'px';
-    mouseCursor.classList.remove("display-none")
+    if (sessionStorage.getItem('selectedAvatar')) {
+        mouseCursor.classList.remove("display-none")
+    }
     // mouseCursor.setAttribute("style", "top: " + e.pageY + "px; left: " + e.pageX + "px;")
 }
